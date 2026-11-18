@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockPulse — Real-Time Inventory Engine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Top Navbar -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="brand">
+                <span class="logo-icon">⚡</span>
+                <div>
+                    <h1>StockPulse</h1>
+                    <span class="subtitle">Concurrency-Safe Inventory & Reservation Engine</span>
+                </div>
+            </div>
+            <div class="live-pill">
+                <span class="pulse-dot"></span> Engine Active (MySQL + JPA @Version)
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Floating Toast Alert -->
+        <div id="alertBox" class="toast hidden"></div>
+
+        <!-- Live Metrics Row -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-label">Total Stock Available</span>
+                <span class="stat-value" id="statTotalStock">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Active Holds (Reserved)</span>
+                <span class="stat-value amber" id="statActiveHolds">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Confirmed Revenue</span>
+                <span class="stat-value emerald" id="statRevenue">₹0</span>
+            </div>
+        </section>
+
+        <!-- Control Bar -->
+        <section class="control-bar">
+            <div class="input-group">
+                <label for="customerName">Active Buyer</label>
+                <input type="text" id="customerName" placeholder="Enter buyer name..." value="Manas">
+            </div>
+            <button onclick="simulateRaceCondition()" class="btn-race">
+                <span>🔥</span> Simulate Race Condition (2 Parallel Clicks)
+            </button>
+        </section>
+
+        <!-- Products Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2>Flash-Sale Catalog</h2>
+                <span class="hint">2-minute auto-expiring stock lock</span>
+            </div>
+            <div id="productGrid" class="grid"></div>
+        </section>
+
+        <!-- Orders Table Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2>Live Reservations & Audit Log</h2>
+                <button onclick="loadAllData()" class="btn-refresh">↻ Sync Now</button>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Buyer</th>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Countdown / Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
